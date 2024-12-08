@@ -7,19 +7,6 @@
 ```
 npm i
 ```
- - ### **Установить переменную окружения для DELETE запросов:**
-```
-NOT_PARTICULARLY_SECRET_TOKEN
-```
-Вот для этого заголовка:
-```
-    extraHTTPHeaders: {
-      /**
-       * Just put here valid token
-       */
-      'Cookie': `token=${process.env.NOT_PARTICULARLY_SECRET_TOKEN}`,
-    },
-```
  - ### **Запустить можно вот так:**
 ```
 npm run protected-tests
