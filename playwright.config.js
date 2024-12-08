@@ -26,12 +26,6 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://automationintesting.online/',
-    extraHTTPHeaders: {
-      /**
-       * Just put here valid token
-       */
-      'Cookie': `token=${process.env.NOT_PARTICULARLY_SECRET_TOKEN}`,
-    },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },

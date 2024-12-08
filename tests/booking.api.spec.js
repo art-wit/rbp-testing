@@ -1,4 +1,5 @@
 const {  test, expect } = require('@playwright/test');
+const { getAuthorisationToken } = require('./heplers');
 
 const sendedMessage1 = {
   name : "John Snow",
@@ -16,7 +17,23 @@ const sendedMessage2 = {
   description : "I would like to book the royal suite!"
 };
 
+let authorisedContext;
+
 test.describe('Booking messages API', () => {
+
+  test.beforeAll(async ({ playwright }, { project }) => {
+    const token = await getAuthorisationToken(project.use.baseURL);
+    authorisedContext = await playwright.request.newContext({
+      extraHTTPHeaders: {
+        'Cookie': `token=${token}`,
+      },
+    });
+  });
+
+  test.afterAll(async ({ }) => {
+    // Dispose all responses.
+    await authorisedContext.dispose();
+  });
 
   test('should post a new message', async ({ request }) => {
 
@@ -31,17 +48,17 @@ test.describe('Booking messages API', () => {
     const getResponse = await request.get(`/message/${id}`);
     expect(getResponse.ok()).toBeTruthy();
 
-    // Cleanup
-    const deleteResponse = await request.delete(`/message/${id}`);
+    // Cleanup (should be authorised)
+    const deleteResponse = await authorisedContext.delete(`/message/${id}`);
     expect(deleteResponse.ok()).toBeTruthy();
 
   });
 
-  test('should get all sended messages', async ({ request }) => {
+  test('should get at least all sended messages', async ({ request }) => {
 
     const sendedMessages = [sendedMessage1, sendedMessage2];
     const sendedIds = [];
-    
+
     // Send messages
     for (const sendedMessage of sendedMessages) {
       const postResponse = await request.post('/message/', {
@@ -64,9 +81,9 @@ test.describe('Booking messages API', () => {
     // Ensure sended messages is here
     expect(clearedRecievedMessages).toEqual(expect.arrayContaining(clearedSendedMessages));
 
-    // Cleanup
+    // Cleanup (should be authorised)
     for (const id of sendedIds) {
-      const deleteResponse = await request.delete(`/message/${id}`);
+      const deleteResponse = await authorisedContext.delete(`/message/${id}`);
       expect(deleteResponse.ok()).toBeTruthy();
     }
 

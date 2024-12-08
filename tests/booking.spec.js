@@ -40,7 +40,7 @@ test.describe('Hotel room booking', () => {
     await bookingPage.verifyMessageSentSuccessfully();
   });
 
-  test.skip('should successfully book a room', async ({ page }) => {
+  test.fixme('should successfully book a room', async ({ page }) => {
     const { 
       name: { firstName, lastName},
       email,

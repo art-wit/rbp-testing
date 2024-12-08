@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "protected-tests": "NOT_PARTICULARLY_SECRET_TOKEN=FsVUIaOTF4iY39WG npx playwright test"
+    "protected-tests": "USER=admin PASSWORD=password npx playwright test"
   },
   "keywords": [],
   "author": "",
