@@ -1,5 +1,5 @@
-const { test } = require('@playwright/test');
-const { BookingPage } = require('./BookingPage');
+import { test } from '@playwright/test';
+import { BookingPage } from './BookingPage';
 
 const user = {
   name: {

@@ -1,5 +1,5 @@
-const {  test, expect } = require('@playwright/test');
-const { getAuthorisationToken } = require('./heplers');
+import { test, expect } from '@playwright/test';
+import { getAuthorisationToken } from './heplers';
 
 const sendedMessage1 = {
   name : "John Snow",
